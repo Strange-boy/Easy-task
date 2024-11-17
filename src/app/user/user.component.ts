@@ -1,8 +1,4 @@
-import { Component, computed, signal } from '@angular/core';
-import { DUMMY_USERS } from '../dummy-users';
-
-//in order to find the random index of the dummy array
-const randomIdx = Math.floor(Math.random() * DUMMY_USERS.length);
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-user',
@@ -11,12 +7,15 @@ const randomIdx = Math.floor(Math.random() * DUMMY_USERS.length);
   styleUrl: './user.component.css',
 })
 export class UserComponent {
-  selectedUser = signal(DUMMY_USERS[randomIdx]);
-  imagePath = computed(() => 'assets/users/' + this.selectedUser().avatar);
+  @Input() avatar!: string;
+  @Input() name!: string;
+
+  get imagePath() {
+    return 'assets/users/' + this.avatar;
+  }
 
   //in order to change the users on click
   onSelectUser() {
-    const randomIdx = Math.floor(Math.random() * DUMMY_USERS.length);
-    this.selectedUser.set(DUMMY_USERS[randomIdx]);
+    console.log('user just clicked !!');
   }
 }
